@@ -10,7 +10,8 @@ import androidx.databinding.ObservableField;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import androidx.databinding.library.baseAdapters.BR;
+import kapadokia.nyandoro.profileapp.BR;
+
 
 public class User extends BaseObservable {
 
@@ -85,7 +86,7 @@ public class User extends BaseObservable {
 
     public void setAbout(String about) {
         this.about = about;
-        notifyPropertyChanged(androidx.databinding.library.baseAdapters.BR.about);
+        notifyPropertyChanged(BR.about);
     }
 
     public ObservableField<Long> getNumberOfPosts() {
