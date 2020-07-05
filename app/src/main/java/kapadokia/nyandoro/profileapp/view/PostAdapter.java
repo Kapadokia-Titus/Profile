@@ -1,5 +1,7 @@
 package kapadokia.nyandoro.profileapp.view;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,35 +16,37 @@ import kapadokia.nyandoro.profileapp.R;
 import kapadokia.nyandoro.profileapp.databinding.PostRowItemBinding;
 import kapadokia.nyandoro.profileapp.model.Post;
 
+import static android.content.ContentValues.TAG;
+
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
 
     private List<Post> postList;
     private LayoutInflater layoutInflater;
     private PostsAdapterListener listener ;
+    private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         private final PostRowItemBinding binding;
 
-        public MyViewHolder(PostRowItemBinding itemBinding) {
-            super(itemBinding.getRoot());
-            this.binding = itemBinding;
+        public MyViewHolder(View itemBinding) {
+            super(itemBinding);
+            binding = DataBindingUtil.bind(itemBinding);
         }
     }
 
-    public PostAdapter(List<Post> postList, PostsAdapterListener listener){
+    public PostAdapter(Context context, List<Post> postList, PostsAdapterListener listener){
+
         this.postList = postList;
         this.listener = listener;
+        this.context = context;
     }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       if (layoutInflater == null){
-           layoutInflater = LayoutInflater.from(parent.getContext());
-       }
 
-       PostRowItemBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.post_row_item,parent,false);
-       return new MyViewHolder(binding);
+       PostRowItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.post_row_item,parent,false);
+       return new MyViewHolder(binding.getRoot());
     }
 
     @Override

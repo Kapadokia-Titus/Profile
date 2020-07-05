@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity  implements PostAdapter.Post
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
 
-        postAdapter = new PostAdapter(getPosts(), (PostAdapter.PostsAdapterListener) this);
+        postAdapter = new PostAdapter(this, getPosts(),  this);
         recyclerView.setAdapter(postAdapter);
     }
     /**
@@ -86,10 +87,12 @@ public class MainActivity extends AppCompatActivity  implements PostAdapter.Post
         for (int i = 1; i < 10; i++) {
             Post post = new Post();
             post.setImageUrl("https://api.androidhive.info/images/nature/" + i + ".jpg");
-
+//            String url = "https://api.androidhive.info/images/nature/" + i + ".jpg";
+//
+//            Log.d("Posts", "getPosts: "+url ); // capture images
             posts.add(post);
         }
-
+        Log.d("total", "getTotal: " + posts);
         return posts;
     }
 
