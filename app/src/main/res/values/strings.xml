@@ -5,4 +5,5 @@
     <string name="posts">POSTS</string>
     <string name="followers">FOLLOWERS</string>
     <string name="following">FOLLOWING</string>
+    <string name="recycler_error_message">Error Loading the recycler</string>
 </resources>

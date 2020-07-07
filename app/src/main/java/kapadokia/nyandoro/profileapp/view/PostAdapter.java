@@ -22,45 +22,45 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
     private List<Post> postList;
     private LayoutInflater layoutInflater;
-    private PostsAdapterListener listener ;
-    private Context context;
+    private PostsAdapterListener listener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private final PostRowItemBinding binding;
 
-        public MyViewHolder(View itemBinding) {
-            super(itemBinding);
-            binding = DataBindingUtil.bind(itemBinding);
+        public MyViewHolder(final PostRowItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.binding = itemBinding;
         }
     }
 
-    public PostAdapter(Context context, List<Post> postList, PostsAdapterListener listener){
 
+    public PostAdapter(List<Post> postList, PostsAdapterListener listener) {
         this.postList = postList;
         this.listener = listener;
-        this.context = context;
-    }
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-       PostRowItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.post_row_item,parent,false);
-       return new MyViewHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (layoutInflater == null) {
+            layoutInflater = LayoutInflater.from(parent.getContext());
+        }
+        PostRowItemBinding binding =
+                DataBindingUtil.inflate(layoutInflater, R.layout.post_row_item, parent, false);
+        return new MyViewHolder(binding);
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.binding.setPost(postList.get(position));
         holder.binding.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener!=null){
+                if (listener != null) {
                     listener.onPostClicked(postList.get(position));
                 }
             }
         });
-
     }
 
     @Override

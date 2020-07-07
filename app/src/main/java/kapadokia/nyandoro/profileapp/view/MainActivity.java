@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,10 +24,10 @@ import kapadokia.nyandoro.profileapp.model.Post;
 import kapadokia.nyandoro.profileapp.model.User;
 import kapadokia.nyandoro.profileapp.utils.GridSpacingItemDecoration;
 
-public class MainActivity extends AppCompatActivity  implements PostAdapter.PostsAdapterListener{
+public class MainActivity extends AppCompatActivity implements PostAdapter.PostsAdapterListener {
 
     private MyClickHandlers handlers;
-    private PostAdapter postAdapter;
+    private PostAdapter mAdapter;
     private RecyclerView recyclerView;
     private ActivityMainBinding binding;
     private User user;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity  implements PostAdapter.Post
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // binding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         Toolbar toolbar = binding.toolbar;
@@ -44,20 +44,25 @@ public class MainActivity extends AppCompatActivity  implements PostAdapter.Post
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         handlers = new MyClickHandlers(this);
-        renderProfile();
+
         initRecyclerView();
+
+        renderProfile();
     }
 
+    /**
+     * Renders RecyclerView with Grid Images in 3 columns
+     */
     private void initRecyclerView() {
         recyclerView = binding.content.recyclerView;
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, dpToPx(4), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
-
-        postAdapter = new PostAdapter(this, getPosts(),  this);
-        recyclerView.setAdapter(postAdapter);
+        mAdapter = new PostAdapter(getPosts(), this);
+        recyclerView.setAdapter(mAdapter);
     }
+
     /**
      * Renders user profile data
      */
@@ -87,15 +92,12 @@ public class MainActivity extends AppCompatActivity  implements PostAdapter.Post
         for (int i = 1; i < 10; i++) {
             Post post = new Post();
             post.setImageUrl("https://api.androidhive.info/images/nature/" + i + ".jpg");
-//            String url = "https://api.androidhive.info/images/nature/" + i + ".jpg";
-//
-//            Log.d("Posts", "getPosts: "+url ); // capture images
+
             posts.add(post);
         }
-        Log.d("total", "getTotal: " + posts);
+
         return posts;
     }
-
 
     @Override
     public void onPostClicked(Post post) {

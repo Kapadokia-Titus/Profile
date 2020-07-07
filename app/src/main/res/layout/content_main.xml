@@ -6,6 +6,7 @@
         <variable
             name="user"
             type="kapadokia.nyandoro.profileapp.model.User" />
+
         <variable
             name="handlers"
             type="kapadokia.nyandoro.profileapp.view.MainActivity.MyClickHandlers" />
@@ -36,6 +37,7 @@
             <RelativeLayout
                 android:layout_width="@dimen/profile_image"
                 android:layout_height="@dimen/profile_image"
+                android:layout_marginTop="45dp"
                 android:layout_gravity="center_horizontal">
 
                 <ImageView
@@ -47,13 +49,13 @@
                     bind:profileImage="@{user.profileImage}"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:onClick="@{handlers::onProfileFabClicked}"
-                    android:src="@drawable/ic_add_white"
-                    app:fabCustomSize="@dimen/fab_profile" />
+                    android:textAlignment="center"
+                    android:src="@drawable/ic_add_white" />
             </RelativeLayout>
 
             <TextView
@@ -164,6 +166,15 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/error_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                android:text="@string/recycler_error_message"
+                android:textSize="35dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
