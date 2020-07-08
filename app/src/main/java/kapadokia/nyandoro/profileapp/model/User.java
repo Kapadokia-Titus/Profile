@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import kapadokia.nyandoro.profileapp.BR;
+import kapadokia.nyandoro.profileapp.R;
 
 
 public class User extends BaseObservable {
@@ -66,6 +67,7 @@ public class User extends BaseObservable {
         Glide.with(view.getContext())
                 .load(imageUrl)
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.original)
                 .into(view);
     }
     @Bindable
